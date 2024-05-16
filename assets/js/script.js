@@ -42,6 +42,8 @@ function runGame (gameType) {
         displayMultiplyQuestion(num1, num2)
     } else if (gameType === "subtract") {
         displaySubtractQuestion(num1, num2)
+    } else if (gameType === "divide") {
+        displayDivideQuestion(num1, num2)
     } else {
         alert(`Unknown game type: ${gameType}`);
         throw `Unknown game type: ${gameType}. Aborting!`;
@@ -88,6 +90,8 @@ function calculateCorrectAnswer () {
         return [operand1 * operand2, "multiply"];
     } else if (operator === "-") {
         return [operand1 - operand2, "subtract"]
+    } else if (operator === "/") {
+        return [operand1 / operand2, "divide"]
     } else {
         alert(`Unimplemented operator ${operator}`);
         throw `Unimplemented operator ${operator}. Aborting!`;
@@ -138,3 +142,25 @@ function displayAdditionQuestion (operand1, operand2) {
     document.getElementById("operator").textContent = "x";
  }
   
+ function displayDivideQuestion (operand1, operand2) {
+
+    let larger, smaller;
+
+    // Determine which operand is larger
+    if (operand1 > operand2) {
+        larger = operand1;
+        smaller = operand2;
+    } else {
+        larger = operand2;
+        smaller = operand1;
+    }
+
+    // Adjust larger to be a multiple of smaller
+    larger = smaller * Math.floor(larger / smaller);
+
+    // Set the content of the HTML elements using the adjusted values
+    document.getElementById("operand1").textContent = larger;
+    document.getElementById("operand2").textContent = smaller;
+    document.getElementById("operator").textContent = "/";
+    
+    }
